@@ -1,0 +1,29 @@
+{% extends "layouts/layout.html" %}
+{% load static %}
+
+{% block title %}Product Details{% endblock %}
+
+{% block content %}
+<h1>{{ product.name }}</h1>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        {% if product.image %}
+            <img src="{% static 'products/images/'|add:product.image %}" 
+                 alt="{{ product.name }}" class="img-fluid">
+        {% else %}
+            <img src="https://via.placeholder.com/300" alt="No Image" class="img-fluid">
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <p><strong>Stock:</strong> {{ product.stock }}</p>
+        <p><strong>Price:</strong> ${{ product.price }}</p>
+        <p><strong>Description:</strong> {{ product.description|default:"No description" }}</p>
+
+        <a href="{{ product.edit_url }}" class="btn btn-warning">Edit</a>
+        <a href="{{ product.delete_url }}" class="btn btn-danger"
+           onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+        <a href="{% url 'products:index' %}" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+{% endblock %}
